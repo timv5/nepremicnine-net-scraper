@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head></head>
+    <body>
+        <div th:if="${housingAdWrapper.getHousingAd() != null}" xmlns:th="http://www.w3.org/1999/xhtml">
+            <h1>Stanovanja, ki ustezajo kriterijem</h1>
+            <ul>
+                <li th:each="item : ${housingAdWrapper.getHousingAd()}">
+                    <ul>
+                        <li th:each="ad : ${item.getAd()}" th:text="${ad}"></li>
+                    </ul>
+                    <br>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
