@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class ScraperScheduler {
         this.mailContentBuilder = mailContentBuilder;
     }
 
-    @Scheduled(fixedRate = 90000)
+    @Scheduled(fixedRate = 21600000)
     public void scraperScheduler() {
 
         // get data from nepremicnine.net

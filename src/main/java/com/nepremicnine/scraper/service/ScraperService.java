@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,6 +85,20 @@ public class ScraperService {
         sb.append("/oglasi-" + appProperties.getUrlConfig().getPosredovanje());
         sb.append("/" + appProperties.getUrlConfig().getRegija());
         sb.append("/" + appProperties.getUrlConfig().getNepremicnina());
+        sb.append("/" + appProperties.getUrlConfig().getTipi());
+        if (!StringUtils.isEmpty(appProperties.getUrlConfig().getCenaOd())) {
+            sb.append("/cena-od-" + appProperties.getUrlConfig().getCenaOd());
+        }
+
+        if (!StringUtils.isEmpty(appProperties.getUrlConfig().getCenaOd())
+                && !StringUtils.isEmpty(appProperties.getUrlConfig().getCenaDo())) {
+            sb.append("/-");
+            sb.append("do-" + appProperties.getUrlConfig().getCenaDo());
+        } else if (StringUtils.isEmpty(appProperties.getUrlConfig().getCenaOd())
+                && !StringUtils.isEmpty(appProperties.getUrlConfig().getCenaDo())) {
+            sb.append("/do-" + appProperties.getUrlConfig().getCenaDo());
+        }
+
 
         sb.append("/");
         return sb.toString();
