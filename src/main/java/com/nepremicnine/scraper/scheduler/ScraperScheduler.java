@@ -1,16 +1,13 @@
 package com.nepremicnine.scraper.scheduler;
 
-import com.nepremicnine.scraper.config.StaticConfig;
 import com.nepremicnine.scraper.service.EmailServiceImpl;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+import com.nepremicnine.scraper.service.ScraperService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 
 @Component
 public class ScraperScheduler {
@@ -18,20 +15,19 @@ public class ScraperScheduler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScraperScheduler.class);
 
     private final EmailServiceImpl emailService;
+    private final ScraperService scraperService;
 
     @Autowired
-    public ScraperScheduler(final EmailServiceImpl emailService) {
+    public ScraperScheduler(final EmailServiceImpl emailService,
+                            final ScraperService scraperService) {
         this.emailService = emailService;
+        this.scraperService = scraperService;
     }
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 20000)
     public void scraperScheduler() {
-        try {
-            Document document = Jsoup.connect(StaticConfig.BASE_URL).get();
-            LOGGER.info(document.title());
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
+        String result = this.scraperService.pageScraper();
+        LOGGER.info(result);
     }
 
 }
